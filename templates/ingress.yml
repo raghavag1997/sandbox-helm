@@ -1,0 +1,20 @@
+{{ if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress-minion
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.org/mergeable-ingress-type: "minion"
+    nginx.org/rewrites: "serviceName={{ .Release.Name }}-sandbox-service rewrite=/"
+spec:
+  rules:
+  - host: kube.890enterprise.business
+    http:
+      paths:
+      - path: /{{ .Release.Name }}/
+        backend:
+          serviceName: {{ .Release.Name }}-sandbox-service
+          servicePort: 80
+{{- end }}
+

@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: 10.100.252.155:8082/docker-repo/datasandbox
+  tag: v1
+  imagePullPolicy: IfNotPresent
+  imagePullSecret: regcred
+service:
+  enabled: true
+  type: ClusterIP
+  port: 80
+  targetPort: 8081
+  protocol: TCP
+ingress:
+  enabled: true
